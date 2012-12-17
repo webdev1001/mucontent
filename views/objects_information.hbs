@@ -1,0 +1,114 @@
+{{! View objects information }}
+
+<div class="container">
+{{#each data}}
+<!-- Modal -->
+<div id="myModal" class="modal hide fade" role="dialog">
+ <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+  </div>
+  <div class="modal-body">
+    <img src="{{s3bucket}}{{filename}}" alt="{{title}}">
+  </div>
+</div>
+    <div class="row"> 
+    <div class="span2"></div>
+      <div class="span8"><legend>{{title}} 
+        {{#if ../can_edit}}
+        <a href="/objects/delete/{{_id}}" role="btn"><i class="icon-trash"></i></a> 
+
+	<a href="/objects/edit/{{_id}}" role="btn"><i class="icon-edit"></i></a>
+        {{/if}}
+        </legend>
+      </div>
+    <div class="span2"></div>
+    </div>
+    
+    <div class="row">
+    <div class="span2"></div>
+      {{#if filename}}
+      <div class="span2"> 
+        <a href="#myModal" role="button" data-toggle="modal">
+        {{! On error on image load, will display 404 not found image }}
+            <img src="{{s3bucket}}{{filename}}" heigth="100" width="110" alt="{{title}}" onerror="this.src='/static/public/img/404-not-found.gif'" >
+        </a>
+      </div>
+      
+      <div class="span4">
+      {{else}}
+      <div class="span6">  
+    {{/if}}
+          {{description}}
+      </div>
+    <div class="span2">
+                  <p><a href="/user/view/{{owner}}" class="btn btn-primary">View Owner</a></p>
+<hr>
+          <a href="https://twitter.com/share" class="twitter-share-button" data-url="{{site_ur}}objects/view/{{slug}}">Tweet</a>
+        <div class="fb-like" data-href="{{site_ur}}objects/view/{{slug}}" data-send="true" data-layout="button_count" data-width="450" data-show-faces="true"></div>
+                    
+        <div class="g-plusone" data-annotation="inline" data-width="300" data-href="{{site_url}}objects/view/{{slug}}"></div>
+
+</div>
+    </div>
+    <div class="row">
+    <div class="span2"></div>
+      <div class="span8">
+           <i class="icon-calendar"></i> {{date}} 
+        <p>
+          
+          
+          <form action='/search' method='post'><i class="icon-tags"></i> Tags : 
+          {{#each tag}}
+              <input type="submit" class="btn" name="tag" value="{{this}}">
+          {{/each}}
+          </form>
+        </p>
+      </div>
+    <div class="span2"></div>
+    </div>
+    
+    <div class="row">
+    <div class="span2"></div>
+      <div class="span8">
+          <legend>Comments <i class="icon-comment"></i></legend>
+	{{#if ../session.connected}}          
+          <form action="/comment/add/{{_id}}" method="post" class="form-inline"> 
+              <input type="text" name="comment" class="span4" placeholder="My comment"> <input type="submit" class="btn" value="Add">
+          </form>
+	{{/if}}
+          {{! the comment section}}
+          {{#if comments}}
+              {{#each comments}}
+                  {{text}} - {{author}} 
+                  {{#if ../../../session.admin}}
+                  <a href="/comment/remove/{{../../_id}}/{{id}}" role='btn'><i class='icon-trash'></i></a>
+                  {{/if}}<br>
+               {{/each}}
+          {{else}}
+          Nessun commento
+          {{/if}}
+      </div>
+    <div class="span2"></div>
+    </div>
+{{/each}}
+</div>
+
+{{! Social network script }}
+<script type="text/javascript">
+  window.___gcfg = {lang: '{{session.language}}'};
+
+  (function() {
+    var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+    po.src = 'https://apis.google.com/js/plusone.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+  })();
+</script>
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/it_IT/all.js#xfbml=1&appId=364031690354267";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>

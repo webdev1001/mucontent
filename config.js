@@ -54,23 +54,6 @@ hbs.registerHelper('block', function(name) {
     return val;
 });
 
-// HBS Helper for check type in user_form view and send right content
-hbs.registerHelper('seeType', function(part) {
-    // Check if the value type passed to view is create or edit
-    if(this.type === "create") {
-        // Get the code in the main block
-        return part.fn(this);
-    } else {
-        // Get the code in the else block
-        return part.inverse(this);
-    }
-});
-
-
-// HBS helper to create a "global varialbe" that we can use on template to image path base url
-hbs.registerHelper('s3bucket', function() {
-    return 'https://s3.amazonaws.com/digitalgroundtest/';
-});
 
 // HBS Helper for check role and permission and get back the content if user is allowed
 // Pass the allowed as a comma separated string like: 0,1,...

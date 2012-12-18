@@ -1,6 +1,7 @@
 # MuContent
 
 Just another application based on ExpressJs for create websites in Node.Js
+Google Group: http://groups.google.com/group/mucontent
 
 Features:
 - http/https configuration

@@ -70,7 +70,7 @@ hbs.registerHelper('checkRole', function(role, allowed, options) {
 });
 
 // HBS HELPER for multilang, lang is the req.session.language setted by user
-hbs.registerHelper('l10n', function(keyword, lang) {
+hbs.registerHelper('translate', function(keyword, lang) {
     // pick the right dictionary
     local = locales[lang] || locales['en'];
     // loop through all the key hierarchy (if any)
@@ -88,6 +88,10 @@ hbs.registerHelper('l10n', function(keyword, lang) {
      return target;
 });
 
+// Read header and footer partials and register on hbs 
+hbs.registerPartial('header', fs.readFileSync(__dirname + '/views/header.hbs', 'utf8'));
+hbs.registerPartial('footer', fs.readFileSync(__dirname + '/views/footer.hbs', 'utf8'));
+
 // Define configuration class
 var Config = function () {};
 
@@ -104,10 +108,10 @@ Config.prototype.Application = function(app) {
         app.use(express.favicon(__dirname + parameters.favicon));
     }
 		
-    // Set view
-    app.set('view engine', 'hbs');
-    app.set('views', __dirname + '/views');     
-    
+    // Set view, layout is disable
+    app.set('view engine', 'hbs');  
+    app.set('views', __dirname + '/views');   
+
     // Set cookie
     app.use(express.cookieParser(parameters.cookie_secret));
     
@@ -143,6 +147,7 @@ Config.prototype.Application = function(app) {
 
     // Set the default locals
     app.use(function(req, res, next){
+        res.locals.layout = false;
         res.locals.title = parameters.title;
         res.locals.site_url = parameters.site_url;
         res.locals.session = req.session;

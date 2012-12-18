@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>{{title}}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    {{! The Styles }}
+    {{! Use different public/private block for styles }}
+    {{{block "stylesheets"}}}
+    <link href="/static/public/css/bootstrap.css" rel="stylesheet">
+    <link href="/static/public/css/bootstrap-responsive.css" rel="stylesheet">
+    <link href="/static/public/css/style.css" rel="stylesheet">
+
+</head>
+<body>
+    <div class="navbar navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container-fluid">
+          <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </a>
+          <a class="brand" href="/">{{title}}</a>
+          <div class="nav-collapse collapse">
+            <ul class="nav">
+              {{#if session.connected}}
+              {{! Here the menu that only connected user can see as <li> }}
+              {{else}}
+              {{! Here the menu that all guest can see }}
+                  <li><a href="/login">{{translate "signin" session.language}}</a></li>
+                  <li><a href="/user/create">{{translate "registration" session.language}}</a></li>
+              {{/if}}
+              </ul>
+              <div class='nav pull-right'>
+                {{#if session.connected}}
+                    {{! navbar-text allow text align in navbar: http://stackoverflow.com/questions/10508466/text-not-aligning-properly-with-bootstraps-navbar-text-pull-right }}
+                    <li class="dropdown">
+                        <a class="dropdown-toggle" href="#" data-toggle="dropdown">{{translate "welcome" session.language}} {{session.username}} <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                        {{#checkRole session.role "0,1"}}
+                              	  <li><a href="/media"><i class="icon-camera"></i> Media{{translate "media" session.language}}</a></li>
+                 
+                              	  <li><a href="/objects/create"><i class="icon-pencil"></i> {{translate "object" session.language}}</a></li>
+                      {{/checkRole}}
+                            {{#if session.admin}} 
+                                <li><a href="/user/view"><i class="icon-user"></i> {{translate "profile" session.language}}</a></li>
+                            {{else}}
+                            
+                                <li><a href="/user/edit/{{../session.user_id}}"><i class="icon-user"></i> {{translate "profile" session.language}}</a></li>
+                          
+                            {{/if}}
+                            
+                           <li><a href="/logout"><i class="icon-off"></i> {{translate "logout" session.language}}</a></li>
+                        </ul>
+                    </li>
+                    
+		    
+                {{/if}}
+                {{! ISSUE ON IPHONE: https://github.com/twitter/bootstrap/issues/4756 }}
+                <li class='dropdown'><a href='#' class='dropdown-toggle' data-toggle='dropdown' data-target='#'>{{translate "language" session.language}} <b class='caret'></b></a>
+                    <ul class='dropdown-menu'>
+                        <li><a href='/locales/en'>English</a></li>
+                        <li><a href='/locales/it'>Italiano</a></li>
+                    </ul>
+                </li>
+             </div>
+          </div><!--/.nav-collapse -->
+        </div>
+      </div>
+    </div>
+
+  <div class="container">
+            {{! The message from the app for the user }}
+            {{#if message}}
+            <div class="container">
+            <div class='alert fade in'>
+                {{! ALERT: use ../session.language because language is outside the message array }}
+                <a class='close' data-dismiss='alert' href='#'>&times;</a>{{#each message}} {{translate msg ../session.language}}<br> {{/each}}
+            </div>
+            </div>
+            {{/if}}

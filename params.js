@@ -31,11 +31,11 @@ module.exports = {
 
     //realtime: true, // If true, enable socket.io for realtime application
     //favicon: '/', // Path to favicon
-    title: 'theApp', // The application title used into views etc
+    title: 'MuContent', // The application title used into views etc
     site_url: 'http://localhost:8000/',
     
     // SMTP Settings
-    from: "TheApp <sender@theapp.com>", // Define from address for mail
+    from: "MuContent <sender@mucontent.com>", // Define from address for mail
     allow_mail: false, // If treu allow the email sending
     // AMAZON AWS Credentials
     AWS_KEY: '',

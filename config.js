@@ -107,11 +107,26 @@ Config.prototype.Application = function(app) {
     if (parameters.favicon) {
         app.use(express.favicon(__dirname + parameters.favicon));
     }
+    
+    // maintenance mode middleware
+    app.use(function (req, res, next) {
+        // Check if is set the maintenance mode in params.js
+        if (parameters.maintenance) {
+            // Check if the remote ip is an allowed ip
+            if (parameters.maintenance_allowed[req.connection.remoteAddress]) {
+                next();
+            } else {
+                res.send(parameters.maintenance_message);
+            }
+        } else {
+            next();
+        }
+    }); 
 		
     // Set view, layout is disable
     app.set('view engine', 'hbs');  
-    app.set('views', __dirname + '/views');   
-
+    app.set('views', __dirname + '/views');  
+    
     // Set cookie
     app.use(express.cookieParser(parameters.cookie_secret));
     
@@ -147,7 +162,7 @@ Config.prototype.Application = function(app) {
 
     // Set the default locals
     app.use(function(req, res, next){
-        res.locals.layout = false;
+        res.locals.layout = false; // Disable layout
         res.locals.title = parameters.title;
         res.locals.site_url = parameters.site_url;
         res.locals.session = req.session;
@@ -160,7 +175,7 @@ Config.prototype.Application = function(app) {
         }
         next();
     });
-
+        
     app.use(app.router);
     
     // Set error view if env is development

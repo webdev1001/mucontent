@@ -54,4 +54,8 @@ module.exports = {
         {route: '/objects/edit/:id', acl: {0: true, 1: true}, ajax: true},
         {route: '/objects/create', acl: {0: true, 1: true}, ajax: true}
     ], // Role legend: 0 (admin), 1 (user), add other if you want and modify the defaults
+    
+    maintenance: false, // Set if the site is in maintenance mode
+    maintenance_allowed: {}, // Set the allowed ip in this mode, like : {'127.0.0.1': true, ...}
+    maintenance_message: "<center>We are online soon</center>"
 };

@@ -18,7 +18,7 @@ Features:
 
 # INSTALL
 
-Requirements: Node.js v0.8.7
+Requirements: Node.js v0.8.7, redis, mongodb
 
 To install the application run, into directory: `npm install --production`    
 **NOTE**: with --production npm doesn't install development dependencies.   
@@ -49,7 +49,7 @@ You can change data for request and credentials for tests in ./test/test.js.
 - Objects: https://github.com/anddimario/mucontent-objects
 - Media: https://github.com/anddimario/mucontent-media
 
-More information and documentation on wiki (SOON).
+More information and documentation on wiki (work in progress).
    
 ---------------------------------------
 

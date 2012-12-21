@@ -48,6 +48,7 @@ You can change data for request and credentials for tests in ./test/test.js.
 - Messages: https://github.com/anddimario/mucontent-messages
 - Objects: https://github.com/anddimario/mucontent-objects
 - Media: https://github.com/anddimario/mucontent-media
+- Theme: https://github.com/anddimario/mucontent-theme
 
 More information and documentation on wiki (work in progress).
    

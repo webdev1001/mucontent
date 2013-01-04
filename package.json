@@ -1,5 +1,5 @@
 {
-	"name":"MuContent",
+	"name":"mucontent",
 	"description":"The basic App",
   	"version":"0.0.1",
   	"author": {
@@ -19,7 +19,7 @@
 		"winston":"*"
 	},
 	"optionalDependencies": {
-		"socket.io":"*",
+		"socket.io":"*"
 	}, 
  	"devDependencies": {
    		"mocha":"*",

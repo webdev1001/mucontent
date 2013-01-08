@@ -31,35 +31,9 @@
               {{! Here the menu that only connected user can see as <li> }}
               {{else}}
               {{! Here the menu that all guest can see }}
-                  <li><a href="/login">{{translate "signin" session.language}}</a></li>
-                  <li><a href="/user/create">{{translate "registration" session.language}}</a></li>
               {{/if}}
               </ul>
               <div class='nav pull-right'>
-                {{#if session.connected}}
-                    {{! navbar-text allow text align in navbar: http://stackoverflow.com/questions/10508466/text-not-aligning-properly-with-bootstraps-navbar-text-pull-right }}
-                    <li class="dropdown">
-                        <a class="dropdown-toggle" href="#" data-toggle="dropdown">{{translate "welcome" session.language}} {{session.username}} <b class="caret"></b></a>
-                        <ul class="dropdown-menu">
-                        {{#checkRole session.role "0,1"}}
-                              	  <li><a href="/media"><i class="icon-camera"></i> Media{{translate "media" session.language}}</a></li>
-                 
-                              	  <li><a href="/objects/create"><i class="icon-pencil"></i> {{translate "object" session.language}}</a></li>
-                      {{/checkRole}}
-                            {{#if session.admin}} 
-                                <li><a href="/user/view"><i class="icon-user"></i> {{translate "profile" session.language}}</a></li>
-                            {{else}}
-                            
-                                <li><a href="/user/edit/{{../session.user_id}}"><i class="icon-user"></i> {{translate "profile" session.language}}</a></li>
-                          
-                            {{/if}}
-                            
-                           <li><a href="/logout"><i class="icon-off"></i> {{translate "logout" session.language}}</a></li>
-                        </ul>
-                    </li>
-                    
-		    
-                {{/if}}
                 {{! ISSUE ON IPHONE: https://github.com/twitter/bootstrap/issues/4756 }}
                 <li class='dropdown'><a href='#' class='dropdown-toggle' data-toggle='dropdown' data-target='#'>{{translate "language" session.language}} <b class='caret'></b></a>
                     <ul class='dropdown-menu'>

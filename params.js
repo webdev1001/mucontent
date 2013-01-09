@@ -40,9 +40,6 @@ module.exports = {
     // AMAZON AWS Credentials
     AWS_KEY: '',
     AWS_SECRET: '',
-
-    // Static route name that are referred to view
-    static_route: ['us'],
     
     routing_acl: [ // Set the acl for single route
         {route: '/logout', acl: {0: true, 1: true}},

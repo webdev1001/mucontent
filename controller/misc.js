@@ -9,6 +9,7 @@
 var utils = require('../lib/utils');
 var parameters = require('../params');
 var Model = require('../models/base');
+var fs = require('fs');
 
 /*
  *  The route function
@@ -30,19 +31,13 @@ function route (app) {
      });
 
     // The static page routing
-    app.get('/:static', utils.accesslog, function (req, res, next) {
-        var size = parameters.static_route.length, count = 0;
-        parameters.static_route.forEach(function (item) {
-            if (req.params.static === item) {
-                res.render(req.params.static);
-                return; // Retrun to stop the forEach
-            }
-            // Count the route and, if the array complete the for, call next() 
-            count += 1;
-            if (count == size) {
-                next();
-            }
-        });
+    app.get('/:static', utils.accesslog, function (req, res, next) { 
+        // Check if the request page exists on view
+        if (fs.existsSync(req.params.static)) {
+            res.render(req.params.static);
+        } else { 
+            next();
+        }
     });
 }
 

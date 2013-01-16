@@ -56,9 +56,9 @@ module.exports = {
     // Menu definition
     menu: [
         // title is the handler in the locales files to get the title based on language
-       /* Examples:
+       // Examples:
         {title: "search", path: "/test", acl: {0: true, 1: false}}, // If you set acl, you resticted the role
-        {title: "you", path: "/you"} // If you don't set acl, all can access
-        */
+        {title: "you", path: "/you", icon: "icon-off"} // If you don't set acl, all can access
+        
     ]
 };

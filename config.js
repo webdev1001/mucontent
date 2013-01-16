@@ -92,7 +92,7 @@ hbs.registerHelper('translate', function(keyword, lang) {
 hbs.registerHelper('createMenu', function(lang, role) {
     // pick the right dictionary
     var local = locales[lang] || locales['en'];
-    console.log(role);
+   
     var html = "";
     
     // Get the menu in params
@@ -103,10 +103,18 @@ hbs.registerHelper('createMenu', function(lang, role) {
         if (acl) {
             // Write the menu voice only if user role is allowed
             if (acl[role]) {
-                html += '<li><a href="' + item.path + '"> ' + local[key] + '</a></li>'; 
+                html += '<li><a href="' + item.path + '">';
+                if (item.icon) {
+                    html += '<i class="' + item.icon + '"></i> ';
+                }
+                html += local[key] + '</a></li>'; 
             }
         } else {
-            html += '<li><a href="' + item.path + '"> ' + local[key] + '</a></li>'; 
+            html += '<li><a href="' + item.path + '">';
+            if (item.icon) {
+                html += '<i class="' + item.icon + '"></i> ';
+            }           
+            html += local[key] + '</a></li>'; 
         }
     });
     

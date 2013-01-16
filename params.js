@@ -42,17 +42,23 @@ module.exports = {
     AWS_SECRET: '',
     
     routing_acl: [ // Set the acl for single route
+/*      Example:
         {route: '/logout', acl: {0: true, 1: true}},
-        {route: '/messages', acl: {0: true, 1: true}},
-        {route: '/messages/number', acl: {0: true, 1: true}, ajax: true}, // The ajax is a different request and restricted respond in a different way
-        {route: '/messages/clear', acl: {0: true, 1: true}, ajax: true},
-        {route: '/messages/text', acl: {0: true, 1: true}, ajax: true},
         // Put in route the same route defined in express.js, for example, a route with params:
         {route: '/objects/edit/:id', acl: {0: true, 1: true}, ajax: true},
-        {route: '/objects/create', acl: {0: true, 1: true}, ajax: true}
+*/
     ], // Role legend: 0 (admin), 1 (user), add other if you want and modify the defaults
     
     maintenance: false, // Set if the site is in maintenance mode
     maintenance_allowed: {}, // Set the allowed ip in this mode, like : {'127.0.0.1': true, ...}
-    maintenance_message: "<center>We are online soon</center>"
+    maintenance_message: "<center>We are online soon</center>",
+    
+    // Menu definition
+    menu: [
+        // title is the handler in the locales files to get the title based on language
+       /* Examples:
+        {title: "search", path: "/test", acl: {0: true, 1: false}}, // If you set acl, you resticted the role
+        {title: "you", path: "/you"} // If you don't set acl, all can access
+        */
+    ]
 };

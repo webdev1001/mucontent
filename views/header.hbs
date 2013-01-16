@@ -27,11 +27,7 @@
           <a class="brand" href="/">{{title}}</a>
           <div class="nav-collapse collapse">
             <ul class="nav">
-              {{#if session.connected}}
-              {{! Here the menu that only connected user can see as <li> }}
-              {{else}}
-              {{! Here the menu that all guest can see }}
-              {{/if}}
+                {{{createMenu session.language session.role}}}
               </ul>
               <div class='nav pull-right'>
                 {{! ISSUE ON IPHONE: https://github.com/twitter/bootstrap/issues/4756 }}

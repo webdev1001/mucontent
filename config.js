@@ -64,9 +64,9 @@ hbs.registerHelper('checkRole', function(role, allowed, options) {
     var temp = allowed.split(',');
     if (temp[role]) { 
         return options.fn(this);
-    }
-    
-
+    } else {
+        return;
+    }    
 });
 
 // HBS HELPER for multilang, lang is the req.session.language setted by user
@@ -86,6 +86,31 @@ hbs.registerHelper('translate', function(keyword, lang) {
      });
      //output
      return target;
+});
+
+// Menu helper
+hbs.registerHelper('createMenu', function(lang, role) {
+    // pick the right dictionary
+    var local = locales[lang] || locales['en'];
+    console.log(role);
+    var html = "";
+    
+    // Get the menu in params
+    parameters.menu.forEach(function (item) {
+        var key = item.title;
+        var acl = item.acl;
+        // Check if the acl is setted, otherwhise all can access
+        if (acl) {
+            // Write the menu voice only if user role is allowed
+            if (acl[role]) {
+                html += '<li><a href="' + item.path + '"> ' + local[key] + '</a></li>'; 
+            }
+        } else {
+            html += '<li><a href="' + item.path + '"> ' + local[key] + '</a></li>'; 
+        }
+    });
+    
+    return html;
 });
 
 // Read header and footer partials and register on hbs 

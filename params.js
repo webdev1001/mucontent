@@ -45,8 +45,8 @@ module.exports = {
 /*      Example:
         {route: '/logout', acl: {0: true, 1: true}},
         // Put in route the same route defined in express.js, for example, a route with params:
-        {route: '/objects/edit/:id', acl: {0: true, 1: true}, ajax: true},
 */
+        {route: '/settigns', acl: {0: true, 1: true}},
     ], // Role legend: 0 (admin), 1 (user), add other if you want and modify the defaults
     
     maintenance: false, // Set if the site is in maintenance mode
@@ -57,8 +57,8 @@ module.exports = {
     menu: [
         // title is the handler in the locales files to get the title based on language
        // Examples:
-        {title: "search", path: "/test", acl: {0: true, 1: false}}, // If you set acl, you resticted the role
+    /*    {title: "search", path: "/test", acl: {0: true, 1: false}}, // If you set acl, you resticted the role
         {title: "you", path: "/you", icon: "icon-off"} // If you don't set acl, all can access
-        
+        */
     ]
 };

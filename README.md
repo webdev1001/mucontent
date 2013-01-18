@@ -1,9 +1,9 @@
 # MuContent
 
-Just another application based on ExpressJs for create websites in Node.Js      
+Based on ExpressJs for create websites in Node.Js      
 Google Group: http://groups.google.com/group/mucontent
 
-Features:
+Features (see module list too):
 - http/https configuration
 - multiuser and multipermission 
 - multilanguage
@@ -15,10 +15,11 @@ Features:
 - pure javascript
 - view based on twitter bootstrap
 - extensible with controllers (module) 
+- static views
 
 # INSTALL
 
-Requirements: Node.js v0.8.7, redis, mongodb
+Requirements: Node.js v0.8.7, redis, mongodb (only if you need modules)
 
 To install the application run, into directory: `npm install --production`    
 **NOTE**: with --production npm doesn't install development dependencies.   
@@ -49,6 +50,7 @@ You can change data for request and credentials for tests in ./test/test.js.
 - Objects: https://github.com/anddimario/mucontent-objects
 - Media: https://github.com/anddimario/mucontent-media
 - Theme: https://github.com/anddimario/mucontent-theme
+- Settings: https://github.com/anddimario/mucontent-settings
 
 More information and documentation on wiki (work in progress).
    

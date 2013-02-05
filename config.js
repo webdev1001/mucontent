@@ -12,31 +12,58 @@ var express = require('express');
 var expressValidator = require('express-validator');
 var RedisStore = require('connect-redis')(express);
 var utils = require('./lib/utils');
-var hbs = require('hbs');
+var hbs = require('./lib/hbs');
 var sessionStore = new RedisStore();
 var fs = require('fs');
+var drex = require('drex');
 // Require parameters class and instance it
 var parameters = require('./params');
 
 // Read the locales json and create locales
 var locales = {};
-fs.readdir(__dirname + '/locales', function (err, files) {
-    files.forEach(function (file) {
-        fs.readFile(__dirname + '/locales/' + file, 'utf8', function (err, data) {
-            if (err) {
-                utils.applog('error', 'Error with locales loading: ' + err);
-            } else {
-                var lang = file.split('.')[0]; 
-                locales[lang] = JSON.parse(data);
-            }
+fs.readdir(__dirname + '/sites', function (err, sites) {
+    sites.forEach(function (site) {
+        fs.readdir(__dirname + '/sites/' + site + '/locales', function (err, files) {
+            files.forEach(function (file) {
+                // Use drex library to dynamic reload the locales
+                drex.require(__dirname + '/sites/' + site + '/locales/' + file, function(data) {
+                        var lang = site + '_' + file.split('.')[0];                         
+                        locales[lang] = data;
+                });
+            });
+        
         });
     });
+
 });
 
+// Read the menu parameters json and create variable
+var menu = {};
+fs.readdir(__dirname + '/sites', function (err, sites) {
+    sites.forEach(function (site) {
+        // Use drex library to dynamic reload the locales
+        drex.require(__dirname + '/sites/' + site + '/settings/menu.js', function(data) {                        
+            menu[site] = data;
+        });
+    });
+
+});
+
+// Read the misc parameters json and create variable
+var misc_params = {};
+fs.readdir(__dirname + '/sites', function (err, sites) {
+    sites.forEach(function (site) {
+        // Use drex library to dynamic reload the locales
+        drex.require(__dirname + '/sites/' + site + '/settings/misc.js', function(data) {                        
+            misc_params[site] = data;
+        });
+    });
+
+});
 
 // Extend hbs with block to use private/public resourse for each view
 var blocks = {};
-
+ 
 hbs.registerHelper('extend', function(name, context) {
     var block = blocks[name];
     if (!block) {
@@ -45,7 +72,6 @@ hbs.registerHelper('extend', function(name, context) {
 
     block.push(context(this));
 });
-
 hbs.registerHelper('block', function(name) {
     var val = (blocks[name] || []).join('\n');
 
@@ -70,12 +96,14 @@ hbs.registerHelper('checkRole', function(role, allowed, options) {
 });
 
 // HBS HELPER for multilang, lang is the req.session.language setted by user
-hbs.registerHelper('translate', function(keyword, lang) {
+hbs.registerHelper('translate', function(keyword, lang, site) {
+    var ref = site + '_' + lang || site + '_en'; 
     // pick the right dictionary
-    local = locales[lang] || locales['en'];
+    var local = locales[ref];
     // loop through all the key hierarchy (if any)
     var target = local;
-    var default_dict = locales['en'];
+    var default_ref = site + '_en';
+    var default_dict = locales[default_ref];
     var keys = keyword.split(".");
     keys.forEach(function (key){
         if (target[key]) {
@@ -89,14 +117,15 @@ hbs.registerHelper('translate', function(keyword, lang) {
 });
 
 // Menu helper
-hbs.registerHelper('createMenu', function(lang, role) {
+hbs.registerHelper('createMenu', function(lang, role, site) {
+    var ref = site + '_' + lang || site + '_en'; 
     // pick the right dictionary
-    var local = locales[lang] || locales['en'];
+    var local = locales[ref];
    
     var html = "";
     
     // Get the menu in params
-    parameters.menu.forEach(function (item) {
+    menu[site].menu.forEach(function (item) {
         var key = item.title;
         var acl = item.acl;
         // Check if the acl is setted, otherwhise all can access
@@ -117,13 +146,8 @@ hbs.registerHelper('createMenu', function(lang, role) {
             html += local[key] + '</a></li>'; 
         }
     });
-    
     return html;
 });
-
-// Read header and footer partials and register on hbs 
-hbs.registerPartial('header', fs.readFileSync(__dirname + '/views/header.hbs', 'utf8'));
-hbs.registerPartial('footer', fs.readFileSync(__dirname + '/views/footer.hbs', 'utf8'));
 
 // Define configuration class
 var Config = function () {};
@@ -136,6 +160,20 @@ Config.prototype.Application = function(app) {
         next();
     }); 
 
+
+    
+    // Middleware to get the host for multisite
+    app.use(function (req, res, next) {
+        // Get the request host and map it to right database into redis 
+        var domain = req.headers.host.split(':')[0];
+
+        // Set the parameters mapping
+        res.locals.mapping = parameters.vhost[domain];
+        res.locals.view_dir = __dirname + '/sites/' + res.locals.mapping + '/views';
+
+        next();
+    }); 
+    
     // Set favicon if is enabled in configuration parameters
     if (parameters.favicon) {
         app.use(express.favicon(__dirname + parameters.favicon));
@@ -144,21 +182,25 @@ Config.prototype.Application = function(app) {
     // maintenance mode middleware
     app.use(function (req, res, next) {
         // Check if is set the maintenance mode in params.js
-        if (parameters.maintenance) {
+        if (misc_params[res.locals.mapping].maintenance) {
             // Check if the remote ip is an allowed ip
-            if (parameters.maintenance_allowed[req.connection.remoteAddress]) {
+            if (misc_params[res.locals.mapping].maintenance_allowed[req.connection.remoteAddress]) {
                 next();
             } else {
-                res.send(parameters.maintenance_message);
+                res.send(misc_params[res.locals.mapping].maintenance_message);
             }
         } else {
             next();
         }
     }); 
 		
-    // Set view, layout is disable
+    // Set view, define the personal engine first
+    app.engine('hbs', hbs.__express);
     app.set('view engine', 'hbs');  
-    app.set('views', __dirname + '/views');  
+    app.use(function (req, res, next) {
+        app.set('views', res.locals.view_dir);  
+        next();
+    });
     
     // Set cookie
     app.use(express.cookieParser(parameters.cookie_secret));
@@ -193,11 +235,14 @@ Config.prototype.Application = function(app) {
     // Set static public file directory, use dedicated mounted path /static/public
     app.use('/static/public', express.static(__dirname + '/public'));
 
-    // Set the default locals
+    // Set the default locals 
     app.use(function(req, res, next){
-        res.locals.layout = false; // Disable layout
-        res.locals.title = parameters.title;
-        res.locals.site_url = parameters.site_url;
+        // Set the default language in session, if not setted
+        if (!req.session.language) {
+            req.session.language = "en";
+        }
+        res.locals.title = misc_params[res.locals.mapping].title;
+        res.locals.site_url = misc_params[res.locals.mapping].site_url;
         res.locals.session = req.session;
         // This is used for flash messages on redirect, set the session variable, and if is set pass to locals
         if (req.session.flashMessage) {

@@ -14,7 +14,6 @@ module.exports = {
     redis_port: 6379, // the redis database port
     mongodb_ip: '127.0.0.1', // the mongodb host
     mongodb_port: 27017, // the mongodb port
-    db_name: 'thesite', // the database name in mongodb for the app
 
     // COOKIE AND SESSIONS
     cookie_secret: '0acbd5c92bd99ba02bad5bab985a26c5',
@@ -30,35 +29,17 @@ module.exports = {
 */
 
     //realtime: true, // If true, enable socket.io for realtime application
-    //favicon: '/', // Path to favicon
-    title: 'MuContent', // The application title used into views etc
-    site_url: 'http://localhost:8000/',
     
     // SMTP Settings
     from: "MuContent <sender@mucontent.com>", // Define from address for mail
-    allow_mail: false, // If treu allow the email sending
+    allow_mail: false, // If true allow the email sending
     // AMAZON AWS Credentials
     AWS_KEY: '',
     AWS_SECRET: '',
     
-    routing_acl: [ // Set the acl for single route
-/*      Example:
-        {route: '/logout', acl: {0: true, 1: true}},
-        // Put in route the same route defined in express.js, for example, a route with params:
-*/
-        {route: '/settigns', acl: {0: true, 1: true}},
-    ], // Role legend: 0 (admin), 1 (user), add other if you want and modify the defaults
-    
-    maintenance: false, // Set if the site is in maintenance mode
-    maintenance_allowed: {}, // Set the allowed ip in this mode, like : {'127.0.0.1': true, ...}
-    maintenance_message: "<center>We are online soon</center>",
-    
-    // Menu definition
-    menu: [
-        // title is the handler in the locales files to get the title based on language
-       // Examples:
-    /*    {title: "search", path: "/test", acl: {0: true, 1: false}}, // If you set acl, you resticted the role
-        {title: "you", path: "/you", icon: "icon-off"} // If you don't set acl, all can access
-        */
-    ]
+    // Mapping the vhost and sites: domain -> site name references
+    vhost: {
+        "localhost": 'default',
+       // "www.pinco.net": 'pinco'
+    },
 };

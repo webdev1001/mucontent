@@ -9,14 +9,14 @@
   	"dependencies": {
    		"express":"3.x",
    		"redis":"*",
-   		"hbs":"*",
   		"connect-redis":"*",
 		"express-validator":"*",
 		"mongodb":"*",
                 "async":"*",
                 "nodemailer":"*",
                 "handlebars":"*",
-		"winston":"*"
+		"winston":"*",
+		"drex":"*"
 	},
 	"optionalDependencies": {
 		"socket.io":"*"

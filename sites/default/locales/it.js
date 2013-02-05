@@ -1,4 +1,4 @@
-{
+module.exports = {
         "errors": {
             "wrongEmail": "Email errata",
             "missingTag": "Tag mancanti",
@@ -21,7 +21,6 @@
         },
         "error50x": "Scusa, errore 50x",
         "error40x": "Scusa, errore 40x",
-        "language": "Lingua",
         "registration": "Registrazione",
         "profile": "Profilo",
         "us": "Noi",
@@ -40,4 +39,4 @@
     "object": "Oggetto",
     "dont_follow": "Non seguire!",
     "follow": "Segui!"
-}
+};

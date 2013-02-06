@@ -5,6 +5,7 @@ Google Group: http://groups.google.com/group/mucontent
 
 Features (see module list too):
 - http/https configuration
+- multisite
 - multiuser and multipermission 
 - multilanguage
 - polymorphic object

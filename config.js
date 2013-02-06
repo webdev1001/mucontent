@@ -97,7 +97,7 @@ hbs.registerHelper('checkRole', function(role, allowed, options) {
 
 // HBS HELPER for multilang, lang is the req.session.language setted by user
 hbs.registerHelper('translate', function(keyword, lang, site) {
-    var ref = site + '_' + lang || site + '_en'; 
+    var ref = site + '_' + (lang || 'en'); 
     // pick the right dictionary
     var local = locales[ref];
     // loop through all the key hierarchy (if any)
@@ -118,7 +118,7 @@ hbs.registerHelper('translate', function(keyword, lang, site) {
 
 // Menu helper
 hbs.registerHelper('createMenu', function(lang, role, site) {
-    var ref = site + '_' + lang || site + '_en'; 
+    var ref = site + '_' + (lang || 'en'); 
     // pick the right dictionary
     var local = locales[ref];
    
@@ -166,7 +166,6 @@ Config.prototype.Application = function(app) {
     app.use(function (req, res, next) {
         // Get the request host and map it to right database into redis 
         var domain = req.headers.host.split(':')[0];
-
         // Set the parameters mapping
         res.locals.mapping = parameters.vhost[domain];
         res.locals.view_dir = __dirname + '/sites/' + res.locals.mapping + '/views';
@@ -237,10 +236,6 @@ Config.prototype.Application = function(app) {
 
     // Set the default locals 
     app.use(function(req, res, next){
-        // Set the default language in session, if not setted
-        if (!req.session.language) {
-            req.session.language = "en";
-        }
         res.locals.title = misc_params[res.locals.mapping].title;
         res.locals.site_url = misc_params[res.locals.mapping].site_url;
         res.locals.session = req.session;

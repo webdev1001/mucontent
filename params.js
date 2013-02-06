@@ -30,13 +30,6 @@ module.exports = {
 
     //realtime: true, // If true, enable socket.io for realtime application
     
-    // SMTP Settings
-    from: "MuContent <sender@mucontent.com>", // Define from address for mail
-    allow_mail: false, // If true allow the email sending
-    // AMAZON AWS Credentials
-    AWS_KEY: '',
-    AWS_SECRET: '',
-    
     // Mapping the vhost and sites: domain -> site name references
     vhost: {
         "localhost": 'default',

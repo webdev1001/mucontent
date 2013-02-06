@@ -17,4 +17,11 @@ module.exports = {
     maintenance_allowed: {}, // Set the allowed ip in this mode, like : {'127.0.0.1': true, ...}
     maintenance_message: "<center>We are online soon</center>",
 
+    // SMTP Settings
+    from: "MuContent - default <sender@mucontent.com>", // Define from address for mail
+    allow_mail: false, // If true allow the email sending
+    // AMAZON AWS Credentials
+    AWS_KEY: '',
+    AWS_SECRET: ''
+
 };

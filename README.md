@@ -1,6 +1,6 @@
 # MuContent
 
-Based on ExpressJs for create websites in Node.Js      
+Based on ExpressJs for create multisite, multilanguage and modular web application with Node.Js         
 Google Group: http://groups.google.com/group/mucontent
 
 Features (see module list too):

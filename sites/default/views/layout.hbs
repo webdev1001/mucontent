@@ -49,7 +49,7 @@
             <div class="container">
             <div class='alert fade in'>
                 {{! ALERT: use ../session.language because language is outside the message array }}
-                <a class='close' data-dismiss='alert' href='#'>&times;</a>{{#each message}} {{translate msg ../session.language}}<br> {{/each}}
+                <a class='close' data-dismiss='alert' href='#'>&times;</a>{{#each message}} {{translate msg ../session.language ../mapping}}<br> {{/each}}
             </div>
             </div>
             {{/if}}

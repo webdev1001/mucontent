@@ -33,6 +33,9 @@ module.exports = {
     // Mapping the vhost and sites: domain -> site name references
     vhost: {
         "localhost": 'default',
-//        "www.pinco.net": 'pinco'
+        "www.pinco.net": 'pinco'
     },
+    
+    // Error for site not found or other
+    server_error: "Sorry, server error, please contact: ",
 };

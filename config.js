@@ -168,15 +168,22 @@ Config.prototype.Application = function(app) {
         var domain = req.headers.host.split(':')[0];
         // Set the parameters mapping
         res.locals.mapping = parameters.vhost[domain];
-        res.locals.view_dir = __dirname + '/sites/' + res.locals.mapping + '/views';
-
-        next();
-    }); 
     
-    // Set favicon if is enabled in configuration parameters
-    if (parameters.favicon) {
-        app.use(express.favicon(__dirname + parameters.favicon));
-    }
+        // Check if site exists, otherwise send error
+        if(res.locals.mapping) {
+            // Set the view directory
+            res.locals.view_dir = __dirname + '/sites/' + res.locals.mapping + '/views';
+            // Set favicon if is enabled in configuration parameters
+            if (misc_params[res.locals.mapping].favicon) {
+                app.use(express.favicon(__dirname + '/sites/' + res.locals.mapping + misc_params[res.locals.mapping].favicon));
+            }
+            next();
+        
+        } else {
+            utils.applog('error', "Requested and invalid site from: " + req.connection.remoteAddress);
+            res.send(parameters.server_error);
+        }
+    }); 
     
     // maintenance mode middleware
     app.use(function (req, res, next) {
@@ -236,6 +243,10 @@ Config.prototype.Application = function(app) {
 
     // Set the default locals 
     app.use(function(req, res, next){
+        // Set guest role
+        if (!req.session.role) {
+            req.session.role = 1000;
+        }
         res.locals.title = misc_params[res.locals.mapping].title;
         res.locals.site_url = misc_params[res.locals.mapping].site_url;
         res.locals.session = req.session;

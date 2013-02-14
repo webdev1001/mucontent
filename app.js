@@ -1,5 +1,5 @@
 /*
- * TheApp
+ * MuContent
  * 
  * Starting application with clustering for multicore CPUs
  * 

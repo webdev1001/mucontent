@@ -1,5 +1,5 @@
 /* 
- * TheApp
+ * MuContent
  * 
  * MongoDB Dynamic model
  * 

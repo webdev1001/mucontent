@@ -1,5 +1,5 @@
 /*
- * TheApp
+ * MuContent
  * 
  * The configuration file for each site, this class the application parameters
  *

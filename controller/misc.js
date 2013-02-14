@@ -1,5 +1,5 @@
 /*
- * TheApp
+ * MuContent
  * 
  * The Login controller
  * 

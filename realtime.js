@@ -1,5 +1,5 @@
 /*
- * TheApp
+ * MuContent
  * 
  * Realtime definition for socket.io, if enabled
  * 

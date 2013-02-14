@@ -1,5 +1,5 @@
 /*
- * TheApp
+ * MuContent
  * 
  * The configuration file, this class instance the Express settings 
  * and other application settings

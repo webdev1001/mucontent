@@ -1,5 +1,5 @@
 /*
- * TheApp
+ * MuContent
  * 
  * The configuration file, this class the application parameters
  *

@@ -9,7 +9,7 @@
 // EXPORT THE PARAMS THAT THE APP USES
 module.exports = {
 
-    //favicon: '/', // Path to favicon
+    //favicon: '/favicon.ico', // Path to favicon
     title: 'MuContent', // The application title used into views etc
     site_url: 'http://localhost:8000/',
     

@@ -28,7 +28,8 @@ module.exports = {
     },
 */
 
-    //realtime: true, // If true, enable socket.io for realtime application
+    realtime: false, // If true, enable socket.io for realtime application
+    realtime_redis_lib: './node_modules/socket.io/lib/stores/redis', // Path where socket.io can find redis library
     
     // Mapping the vhost and sites: domain -> site name references
     vhost: {

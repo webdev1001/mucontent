@@ -1,7 +1,7 @@
 {
 	"name":"mucontent",
-	"description":"The basic App",
-  	"version":"0.0.1",
+	"description":"MuContent - Based on ExpressJs for create multisite, multilanguage and modular web application with Node.Js",
+  	"version":"1.0.0",
   	"author": {
    		"name": "Andrea Di Mario",
    		"email": "anddimario@gmail.com"

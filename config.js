@@ -115,6 +115,17 @@ hbs.registerHelper('translate', function(keyword, lang, site) {
      //output
      return target;
 });
+// Helper used to find available language for the sites
+hbs.registerHelper('availableLanguage', function (site) {
+    // Read the language files available
+    var locales = fs.readdirSync(__dirname + '/sites/' + site + '/locales');
+    var html = '';
+    // See all file and create the html
+    for (var i = 0; i < locales.length; i++) {
+        html += '<li><a href="/locales/' + locales[i].split('.')[0] + '">' + locales[i].split('.')[0] + '</a></li>';
+    } 
+    return html;
+});
 
 // Menu helper
 hbs.registerHelper('createMenu', function(lang, role, site) {
@@ -289,8 +300,8 @@ Config.prototype.SocketIO = function (io) {
 	// Limit log level
 	io.set('log level', 1);
         // Set store in redis so allow scale
-        var RedisStore = require('./node_modules/socket.io/lib/stores/redis'),
-            redis=require('redis'),
+        var RedisStore = require(parameters.realtime_redis_lib),
+            redis = require('redis'),
             pub    = redis.createClient(),
             sub    = redis.createClient(),
             client = redis.createClient();

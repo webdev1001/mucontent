@@ -3,3 +3,4 @@ local
 wiki
 todo
 .npmignore
+node_modules

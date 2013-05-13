@@ -1,6 +1,6 @@
 # MuContent
 
-Based on ExpressJs for create multisite, multilanguage and modular web application with Node.Js         
+CMS based on ExpressJs for create multisite, multilanguage and modular web application with Node.Js         
 Google Group: http://groups.google.com/group/mucontent
 
 Features (see module list too):
@@ -20,7 +20,7 @@ Features (see module list too):
 
 # INSTALL
 
-Requirements: Node.js v0.8.7, redis, mongodb (only if you need modules)
+Requirements: Node.js v0.10.4, redis, mongodb (only if you need modules)
 
 To install the application run, into directory: `npm install --production`    
 **NOTE**: with --production npm doesn't install development dependencies.   

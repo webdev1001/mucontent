@@ -255,7 +255,7 @@ Config.prototype.Application = function(app) {
     // Set the default locals 
     app.use(function(req, res, next){
         // Set guest role
-        if (!req.session.role) {
+        if (!req.session) {
             req.session.role = 1000;
         }
         res.locals.title = misc_params[res.locals.mapping].title;

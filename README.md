@@ -20,7 +20,9 @@ Features (see module list too):
 
 # INSTALL
 
-Requirements: Node.js v0.10.4, redis, mongodb (only if you need modules)
+Requirements: Node.js v0.10.4, redis    
+**IMP**: You must install redis to allow sessions.    
+Optional: mongodb (only if you need modules)
 
 To install the application run, into directory: `npm install --production`    
 **NOTE**: with --production npm doesn't install development dependencies.   

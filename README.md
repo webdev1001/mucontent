@@ -21,7 +21,7 @@ Features (see module list too):
 # INSTALL
 
 Requirements: Node.js v0.10.4, redis    
-**IMP**: You must install redis to allow sessions.    
+**IMP**: You must install redis to allow sessions and start it before MuContent, so MuContent can read the role from session on startup.    
 Optional: mongodb (only if you need modules)
 
 To install the application run, into directory: `npm install --production`    

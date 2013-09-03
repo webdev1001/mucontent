@@ -237,7 +237,7 @@ Config.prototype.Application = function(app) {
     app.use(express.methodOverride());
     app.use(express.bodyParser());
     
-    app.use(expressValidator);
+    app.use(expressValidator());
 
    // Set static private file directory, use dedicated mounted path /static/private
    app.use('/static/private', function(req, res, next){

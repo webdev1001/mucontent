@@ -41,9 +41,10 @@ if (cluster.isMaster) {
     configuration.Application(app);
 
     // get all controller as a module (all function is route)
-    fs.readdir(__dirname + '/controller', function (err, files) {
+    utils.readDir(__dirname + '/controller', function (err, results) {
+        var files = results.files;
         files.forEach(function(item) {
-            require('./controller/' + item).route(app);
+            require(item).route(app);
         });
     });
 
